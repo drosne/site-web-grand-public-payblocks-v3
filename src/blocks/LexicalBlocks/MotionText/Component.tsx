@@ -57,7 +57,7 @@ export const MotionTextBlock: React.FC<Props & { publicContext: PublicContextPro
             }}
             transition={{
               delay: i * (animationDelay || 0.08) + 0.1,
-              duration: animationDuration,
+              duration: animationDuration || 0.8,
               ease: [0.215, 0.61, 0.355, 1],
             }}
           >

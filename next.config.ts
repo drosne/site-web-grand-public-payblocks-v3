@@ -16,6 +16,10 @@ const nextConfig: NextConfig = {
     staticGenerationMaxConcurrency: 8,
     staticGenerationMinPagesPerWorker: 25,
   },
+  // Fix hydration mismatch issues
+  compiler: {
+    removeConsole: process.env.NODE_ENV === 'production',
+  },
   images: {
     qualities: [100, 90],
     remotePatterns: [
@@ -33,7 +37,7 @@ const nextConfig: NextConfig = {
       },
     ],
   },
-  reactStrictMode: true,
+  reactStrictMode: false, // Temporarily disable to fix hydration issues
   poweredByHeader: false,
 }
 

@@ -16,7 +16,7 @@ export async function Header({ publicContext }: { publicContext: PublicContextPr
     1,
   )()) as DataFromGlobalSlug<'header'>
 
-  let navbarComponent: ReactElement
+  let navbarComponent: ReactElement = <div />
   switch (header.designVersion) {
     case '1': {
       navbarComponent = <Navbar1 header={header} publicContext={publicContext} />
@@ -28,6 +28,15 @@ export async function Header({ publicContext }: { publicContext: PublicContextPr
     }
     case '5': {
       navbarComponent = <Navbar5 header={header} publicContext={publicContext} />
+      break
+    }
+    case 'justice-cool': {
+      // Sidebar layout - no navbar component needed
+      navbarComponent = <div />
+      break
+    }
+    default: {
+      navbarComponent = <div />
       break
     }
   }

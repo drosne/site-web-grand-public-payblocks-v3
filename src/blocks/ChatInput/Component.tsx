@@ -38,7 +38,7 @@ export const ChatInput: React.FC<ChatInputProps> = ({
           <h2 className="text-4xl font-bold tracking-tight text-gray-900 mb-6">
             {title}
           </h2>
-          <p className="text-xl text-gray-600 mb-12 text-left">
+          <p className="text-xl text-gray-600 mb-12 text-center">
             {subtitle}
           </p>
           
@@ -190,7 +190,7 @@ function PlaceholdersAndVanishInput({
   const animate = (start: number) => {
     const animateFrame = (pos: number = 0) => {
       requestAnimationFrame(() => {
-        const newArr = [];
+        const newArr: Array<{ x: number; y: number; r: number; color: string }> = [];
         for (let i = 0; i < newDataRef.current.length; i++) {
           const current = newDataRef.current[i];
           if (current.x < pos) {

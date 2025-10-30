@@ -262,6 +262,7 @@ export const FeatureBlock: Block = {
             'FEATURE33',
             'FEATURE38',
             'FEATURE58',
+            'FEATURE222',
             'FEATURE250',
           ].includes(designVersion),
       },
@@ -380,6 +381,7 @@ export const FeatureBlock: Block = {
                 'FEATURE114',
                 'FEATURE117',
                 'FEATURE159',
+                'ORGANISATION_LIST',
                 'FEATURE250',
               ].includes(designVersion)
             },

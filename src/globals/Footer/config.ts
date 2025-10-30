@@ -45,7 +45,7 @@ export const Footer: GlobalConfig = {
     {
       name: 'designVersion',
       type: 'select',
-      options: ['1', '2', '3', '4', '5', '6', '7', '8'],
+      options: ['1', '2', '3', '4', '5', '6', '7', '8', 'justice-cool'],
     },
     {
       name: 'logo',
