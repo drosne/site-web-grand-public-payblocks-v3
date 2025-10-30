@@ -45,7 +45,7 @@ export const Footer: GlobalConfig = {
     {
       name: 'designVersion',
       type: 'select',
-      options: ['1', '2', '3', '4', '5', '6', '7', '8', 'justice-cool'],
+      options: ['1', '2', '3', '4', '5', '6', '7', '8'],
     },
     {
       name: 'logo',
@@ -88,7 +88,7 @@ export const Footer: GlobalConfig = {
       },
       admin: {
         description: {
-          de: 'Legale Links wie Impressum, Datenschutzerklärung, etc.',
+          de: 'Legale Links wie Impressum, Datenschutzerklärung, etc.',
           en: 'Legal links like imprint, privacy policy, etc.',
         },
         condition: (_, siblingData) => {

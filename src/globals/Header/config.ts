@@ -64,12 +64,8 @@ export const Header: GlobalConfig = {
           label: '5 (simple)',
           value: '5',
         },
-        {
-          label: 'sidebar (Justice.cool)',
-          value: 'justice-cool',
-        },
       ],
-      defaultValue: 'justice-cool',
+      defaultValue: '1',
       required: true,
     },
     {

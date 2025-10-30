@@ -73,7 +73,11 @@ export default async function RootLayout({
     1,
   )()) as DataFromGlobalSlug<'header'>
 
-    const isSidebarLayout = header.designVersion === 'justice-cool'
+  // Check if we have a Justice.cool logo to determine sidebar layout
+  const isSidebarLayout = header.logo && 
+    typeof header.logo === 'object' && 
+    'filename' in header.logo && 
+    header.logo.filename?.includes('Justice.cool')
 
   return (
     <html
