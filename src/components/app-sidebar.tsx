@@ -55,8 +55,8 @@ import { DataFromGlobalSlug } from 'payload'
 import { serverUrl as NEXT_PUBLIC_SERVER_URL } from '@/config/server'
 
 export function AppSidebar({ header }: { header: DataFromGlobalSlug<'header'> }) {
-  const { state, toggleSidebar } = useSidebar()
-  const isCollapsed = state === "collapsed"
+  const { state, toggleSidebar, isMobile } = useSidebar()
+  const isCollapsed = state === "collapsed" && !isMobile
   const [isUserMenuOpen, setIsUserMenuOpen] = React.useState(false)
   const [isDossiersOpen, setIsDossiersOpen] = React.useState(false)
 
