@@ -1,0 +1,35 @@
+<svg width="512" height="512" viewBox="0 0 512 512" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Cercle de fond avec dégradé bleu -->
+  <defs>
+    <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1E40AF;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#3B82F6;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  
+  <!-- Cercle de fond -->
+  <circle cx="256" cy="256" r="240" fill="url(#gradient)"/>
+  
+  <!-- Icône balance de la justice -->
+  <g transform="translate(256, 200)">
+    <!-- Colonne centrale -->
+    <rect x="-8" y="-160" width="16" height="160" fill="white" opacity="0.95"/>
+    
+    <!-- Plateaux de la balance -->
+    <ellipse cx="-80" cy="-140" rx="30" ry="10" fill="white" opacity="0.95"/>
+    <ellipse cx="80" cy="-140" rx="30" ry="10" fill="white" opacity="0.95"/>
+    
+    <!-- Colonnes verticales des plateaux -->
+    <rect x="-90" y="-150" width="10" height="30" fill="white" opacity="0.95"/>
+    <rect x="80" y="-150" width="10" height="30" fill="white" opacity="0.95"/>
+    
+    <!-- Lien entre colonnes et plateaux -->
+    <rect x="-95" y="-145" width="15" height="6" fill="white" opacity="0.95"/>
+    <rect x="80" y="-145" width="15" height="6" fill="white" opacity="0.95"/>
+    
+    <!-- Base de la balance -->
+    <path d="M -120 -40 L 120 -40 L 120 -20 L -120 -20 Z" fill="white" opacity="0.95"/>
+    <path d="M -120 -40 L 120 -40 L 0 -200 Z" fill="white" opacity="0.8"/>
+  </g>
+</svg>
+

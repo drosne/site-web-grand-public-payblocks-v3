@@ -1,0 +1,102 @@
+# Règles de développement pour le projet Justice.cool - Approche orthodoxe
+
+## ⚠️ PRINCIPE FONDAMENTAL : RESPECT STRICT DES ARCHITECTURES OFFICIELLES
+
+### 1. Documentation obligatoire AVANT toute implémentation
+- **TOUJOURS** consulter la documentation officielle via Context7 AVANT d'écrire du code
+- Utiliser systématiquement :
+  1. `mcp_context7_resolve-library-id` avec le nom de la librairie
+  2. `mcp_context7_get-library-docs` avec l'ID résolu pour obtenir la documentation complète
+- Ne JAMAIS deviner ou improviser : si quelque chose n'est pas clair, consulter la doc d'abord
+
+### 2. Shadcn UI - Usage strictement officiel
+- **TOUJOURS** installer les composants via la CLI officielle : `npx shadcn@latest add [component]`
+- Ne JAMAIS modifier les fichiers de composants Shadcn directement dans `src/components/ui/`
+- Utiliser les composants tels quels, avec leurs props et patterns officiels
+- Pour la sidebar : utiliser exactement comme dans la documentation Shadcn UI
+- Les classes CSS doivent être définies dans `@theme inline` avec format HSL pour Tailwind CSS v4
+- Format : `--color-sidebar-accent: 240 4.8% 95.9%;` (sans wrapper `hsl()`)
+
+### 3. Payblocks - Architecture respectée
+- Suivre la structure Payblocks : `src/globals/`, `src/blocks/`, `src/components/ui/`
+- Utiliser le système de blocs Payblocks pour le contenu
+- Respecter les conventions Payblocks pour les globals (Header, Footer, etc.)
+- Ne jamais contourner l'architecture Payblocks
+
+### 4. Payload CMS - Conventions respectées
+- Utiliser les patterns Payload CMS pour les collections, globals, et blocs
+- Respecter le système de types Payload (`payload-types`)
+- Utiliser l'API Payload correctement pour créer/modifier les données
+
+### 5. Intégration Sidebar - Règles strictes
+- Utiliser `SidebarProvider` > `Sidebar` + `SidebarInset` comme siblings directs
+- `Sidebar` avec `variant="inset"` et `collapsible="icon"`
+- Utiliser `useSidebar` hook officiel pour l'état
+- `SidebarInset` doit avoir `ml-0` pour `variant="inset"` (géré par le spacer natif)
+- Le spacer dans `Sidebar` calcule automatiquement l'espace pour `variant="inset"`
+- AdminBar : `fixed top-0` avec `margin-left` conditionnel via sélecteurs `group-data-[collapsible=icon]`
+
+### 6. CSS et Tailwind CSS v4
+- Variables dans `@theme inline` : format HSL sans wrapper
+- Tailwind génère automatiquement les classes avec toutes les variantes (`hover:`, `active:`, etc.)
+- Ne pas créer de classes CSS manuelles sauf si absolument nécessaire
+
+### 7. Structure de fichiers
+- Ne jamais dupliquer les composants Shadcn
+- Créer des wrappers uniquement si nécessaire
+- Garder la structure Payblocks intacte
+
+### 8. Validation après chaque modification
+- ✅ Documentation officielle respectée ?
+- ✅ Styles hover fonctionnent ?
+- ✅ Responsive fonctionne ?
+- ✅ Collapse/expand fonctionne ?
+- ✅ AdminBar positionnée correctement ?
+- ✅ Pas de padding excessif ?
+
+### 9. Commandes utiles
+```bash
+# Installation Shadcn
+npx shadcn@latest add sidebar
+
+# Accès documentation Context7
+# 1. Résoudre l'ID : mcp_context7_resolve-library-id avec nom librairie
+# 2. Obtenir doc : mcp_context7_get-library-docs avec ID résolu
+```
+
+### 10. Références de documentation
+- **Shadcn UI Sidebar** : https://ui.shadcn.com/docs/components/sidebar
+- **Payblocks** : Documentation via Context7 (`/payblocks/payblocks` ou similaire)
+- **Payload CMS** : Documentation via Context7 (`/payloadcms/payload` ou similaire)
+
+### 11. En cas de problème
+1. ⚠️ Arrêter immédiatement
+2. 📚 Consulter la documentation officielle via Context7
+3. 🔍 Vérifier les exemples dans la documentation
+4. 🆚 Comparer avec notre implémentation
+5. ❌ Ne JAMAIS "deviner" ou "bricoler"
+
+## Code Style and Structure (hérité)
+- Write concise, technical TypeScript code with accurate examples.
+- Use functional and declarative programming patterns; avoid classes.
+- Prefer iteration and modularization over code duplication.
+- Use descriptive variable names with auxiliary verbs (e.g., isLoading, hasError).
+- Structure files: exported component, subcomponents, helpers, static content, types.
+
+## Naming Conventions
+- Use lowercase with dashes for directories (e.g., components/auth-wizard).
+- Favor named exports for components.
+
+## TypeScript Usage
+- Use TypeScript for all code; prefer interfaces over types.
+- Avoid enums; use maps instead.
+- Use functional components with TypeScript interfaces.
+
+## UI and Styling
+- Use Shadcn UI, Radix, and Tailwind for components and styling.
+- Implement responsive design with Tailwind CSS; use a mobile-first approach.
+
+## Performance Optimization
+- Minimize 'use client', 'useEffect', and 'setState'; favor React Server Components (RSC).
+- Wrap client components in Suspense with fallback.
+- Use dynamic loading for non-critical components.
