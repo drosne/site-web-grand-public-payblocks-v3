@@ -25,6 +25,7 @@ import { CasestudiesBlock } from './Casestudies/Component'
 import { TimelineBlock } from './Timeline/Component'
 import { LoginBlock } from './Login/Component'
 import { SignupBlock } from './Signup/Component'
+import { ChatInput } from './ChatInput/Component'
 
 const blockComponents: Partial<Record<Page['layout'][0]['blockType'], React.FC<any>>> = {
   archive: ArchiveBlock,
@@ -49,6 +50,7 @@ const blockComponents: Partial<Record<Page['layout'][0]['blockType'], React.FC<a
   timeline: TimelineBlock,
   login: LoginBlock,
   signup: SignupBlock,
+  chatInput: ChatInput,
 }
 
 export const RenderBlocks: React.FC<{

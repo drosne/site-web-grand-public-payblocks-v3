@@ -77,10 +77,24 @@
   --color-sidebar-foreground: 240 5.3% 26.1%;
   --color-sidebar-primary: 240 5.9% 10%;
   --color-sidebar-primary-foreground: 0 0% 98%;
-  --color-sidebar-accent: 240 4.8% 95.9%;
+  --color-sidebar-accent: 240 5.9% 10% / 0.1;
   --color-sidebar-accent-foreground: 240 5.9% 10%;
   --color-sidebar-border: 220 13% 91%;
   --color-sidebar-ring: 217.2 91.2% 59.8%;
+  
+  /* 
+   * RÈGLES DE COHÉRENCE DES COULEURS - À RESPECTER ABSOLUMENT
+   * 
+   * 1. Sidebar et blocks doivent utiliser les MÊMES couleurs
+   * 2. Utiliser TOUJOURS les classes Tailwind standard (bg-gray-100, text-gray-700, etc.)
+   * 3. NE PAS utiliser de variables CSS personnalisées pour les couleurs
+   * 4. Couleurs harmonisées :
+   *    - Fond principal : bg-gray-100 (équivalent à sidebar)
+   *    - Texte principal : text-gray-700
+   *    - Texte secondaire : text-gray-600
+   *    - Accent : bg-gray-200 hover:bg-gray-300
+   *    - Bordures : border-gray-200
+   */
   
   /* Variables CSS pour la largeur de la sidebar */
   --sidebar-width: 16rem;

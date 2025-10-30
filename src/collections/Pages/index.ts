@@ -41,6 +41,7 @@ import { CasestudiesBlock } from '@/blocks/Casestudies/config'
 import { TimelineBlock } from '@/blocks/Timeline/config'
 import { LoginBlock } from '@/blocks/Login/config'
 import { SignupBlock } from '@/blocks/Signup/config'
+import { ChatInput } from '@/blocks/ChatInput/config'
 
 export const PageBlocks: Block[] = [
   FeatureBlock,
@@ -65,6 +66,7 @@ export const PageBlocks: Block[] = [
   TimelineBlock,
   LoginBlock,
   SignupBlock,
+  ChatInput,
 ]
 
 export const Pages: CollectionConfig = {
