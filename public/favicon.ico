@@ -1,5 +1,21 @@
 <svg id="justice-cool-favicon-16" xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
-  <circle cx="8" cy="8" r="7" fill="#2c3034" stroke="#2c3034" stroke-width="1"/>
-  <path d="M4 6h8v1H4v-1zm0 2h8v1H4V8zm0 2h6v1H4v-1z" fill="white"/>
-  <circle cx="8" cy="5" r="1" fill="white"/>
+  <!-- Fond carré avec coins arrondis -->
+  <rect x="1" y="1" width="14" height="14" rx="3" fill="#1E40AF"/>
+  
+  <!-- Icône balance de la justice simplifiée -->
+  <g transform="translate(8, 8)">
+    <!-- Colonne centrale -->
+    <rect x="-0.5" y="-4" width="1" height="8" fill="white"/>
+    
+    <!-- Plateaux de la balance -->
+    <ellipse cx="-3" cy="-3" rx="2" ry="0.5" fill="white"/>
+    <ellipse cx="3" cy="-3" rx="2" ry="0.5" fill="white"/>
+    
+    <!-- Colonnes verticales des plateaux -->
+    <rect x="-3.5" y="-3.5" width="1" height="1.5" fill="white"/>
+    <rect x="2.5" y="-3.5" width="1" height="1.5" fill="white"/>
+    
+    <!-- Base de la balance -->
+    <rect x="-4" y="1" width="8" height="1" fill="white"/>
+  </g>
 </svg>
