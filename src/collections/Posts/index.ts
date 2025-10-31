@@ -20,6 +20,7 @@ import { Code } from '@/blocks/Code/config'
 import { MediaBlock } from '@/blocks/MediaBlock/config'
 import { generatePreviewPath } from '@/utilities/generatePreviewPath'
 import { populateAuthors } from './hooks/populateAuthors'
+import { populateRelatedPosts } from './hooks/populateRelatedPosts'
 import { revalidatePost } from './hooks/revalidatePost'
 
 import {
@@ -140,20 +141,36 @@ export const Posts: CollectionConfig = {
         {
           fields: [
             {
-              name: 'relatedPosts',
+              name: 'organisation',
               type: 'relationship',
+              relationTo: 'organisations',
+              label: 'Organisation',
               admin: {
                 position: 'sidebar',
+                description: 'Organisation à laquelle cet article appartient',
               },
-              filterOptions: ({ id }) => {
-                return {
-                  id: {
-                    not_in: [id],
-                  },
-                }
+            },
+            {
+              name: 'offre',
+              type: 'relationship',
+              relationTo: 'offres',
+              label: 'Offre',
+              admin: {
+                position: 'sidebar',
+                description: 'Offre au sein de l\'organisation à laquelle cet article est attaché',
               },
-              hasMany: true,
+            },
+            {
+              name: 'relatedPosts',
+              type: 'relationship',
               relationTo: 'posts',
+              hasMany: true,
+              label: 'Articles suggérés',
+              admin: {
+                position: 'sidebar',
+                description: 'Articles suggérés automatiquement basés sur : même organisation, catégories communes, récence, et même offre',
+                readOnly: true,
+              },
             },
             {
               name: 'categories',
@@ -268,7 +285,7 @@ export const Posts: CollectionConfig = {
   hooks: {
     beforeChange: [calculateReadTime],
     afterChange: [revalidatePost],
-    afterRead: [populateAuthors],
+    afterRead: [populateAuthors, populateRelatedPosts],
   },
   versions: {
     drafts: {

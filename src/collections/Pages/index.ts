@@ -43,6 +43,7 @@ import { LoginBlock } from '@/blocks/Login/config'
 import { SignupBlock } from '@/blocks/Signup/config'
 import { ChatInput } from '@/blocks/ChatInput/config'
 import { OrganisationsListBlock } from '@/blocks/OrganisationsList/config'
+import { DerniersArticlesBlock } from '@/blocks/DerniersArticles/config'
 
 export const PageBlocks: Block[] = [
   FeatureBlock,
@@ -66,10 +67,11 @@ export const PageBlocks: Block[] = [
   CasestudiesBlock,
   TimelineBlock,
   LoginBlock,
-  SignupBlock,
-  ChatInput,
-  OrganisationsListBlock,
-]
+      SignupBlock,
+      ChatInput,
+      OrganisationsListBlock,
+      DerniersArticlesBlock,
+    ]
 
 export const Pages: CollectionConfig = {
   slug: 'pages',

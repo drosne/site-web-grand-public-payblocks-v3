@@ -6,6 +6,7 @@ import { ArchiveBlock } from '@/blocks/ArchiveBlock/Component'
 import { FormBlock } from '@/blocks/Form/Component'
 import { FeatureBlock } from '@/blocks/Feature/Component'
 import { GalleryBlock } from './Gallery/Component'
+import { getCachedInstagramPosts } from '@/utilities/getInstagramPosts'
 import { CtaBlock } from '@/blocks/Cta/Component'
 import { LogosBlock } from '@/blocks/Logos/Component'
 import { AboutBlock } from '@/blocks/About/Component'
@@ -27,6 +28,7 @@ import { LoginBlock } from './Login/Component'
 import { SignupBlock } from './Signup/Component'
 import { ChatInput } from './ChatInput/Component'
 import { OrganisationsList } from './OrganisationsList/Component'
+import { DerniersArticlesBlockComponent } from './DerniersArticles/index'
 
 const blockComponents: Partial<Record<Page['layout'][0]['blockType'], React.FC<any>>> = {
   archive: ArchiveBlock,
@@ -53,21 +55,44 @@ const blockComponents: Partial<Record<Page['layout'][0]['blockType'], React.FC<a
   signup: SignupBlock,
   chatInput: ChatInput,
   organisationsList: OrganisationsList,
+  derniersArticles: DerniersArticlesBlockComponent,
 }
 
 export const RenderBlocks: React.FC<{
   blocks: Page['layout'][0][]
   publicContext: PublicContextProps
   disableContainer?: boolean
-}> = (props) => {
+}> = async (props) => {
   const { blocks, publicContext, disableContainer } = props
 
   const hasBlocks = blocks && Array.isArray(blocks) && blocks.length > 0
 
-  if (hasBlocks) {
-    return (
-      <Fragment>
-        {blocks.map((block, index) => {
+  if (!hasBlocks) {
+    return null
+  }
+
+  // Pré-charger toutes les données Instagram nécessaires
+  const instagramDataPromises = blocks.map(async (block) => {
+    if (
+      block.blockType === 'gallery' &&
+      block.designVersion === 'GALLERY4' &&
+      (block as any).useInstagramPosts
+    ) {
+      try {
+        return await getCachedInstagramPosts((block as any).instagramPostsLimit || 12)
+      } catch (error) {
+        console.error('Error fetching Instagram posts:', error)
+        return []
+      }
+    }
+    return undefined
+  })
+
+  const instagramDataArray = await Promise.all(instagramDataPromises)
+
+  return (
+    <Fragment>
+      {blocks.map((block, index) => {
           const { blockType } = block
 
           if (blockType && blockType in blockComponents) {
@@ -171,12 +196,16 @@ export const RenderBlocks: React.FC<{
             }
 
             if (Block) {
+              // Récupérer les posts Instagram pré-chargés pour ce bloc
+              const instagramPosts = instagramDataArray[index]
+
               return (
                 <div key={index} className={className} id={block.id || undefined}>
                   <Block
                     {...block}
                     publicContext={publicContext}
                     disableContainer={disableContainer}
+                    instagramPosts={instagramPosts}
                   />
                 </div>
               )
@@ -186,7 +215,4 @@ export const RenderBlocks: React.FC<{
         })}
       </Fragment>
     )
-  }
-
-  return null
 }

@@ -34,8 +34,12 @@ import Categories from './collections/Categories'
 import { Media } from './collections/Media'
 import { Pages } from './collections/Pages'
 import { Posts } from './collections/Posts'
+import { InstagramPosts } from './collections/InstagramPosts'
 import Users from './collections/Users'
 import Roles from './collections/Roles'
+import Organisations from './collections/Organisations'
+import Offres from './collections/Offres'
+import CitationsPresse from './collections/CitationsPresse'
 import { Footer } from './globals/Footer/config'
 import { Header } from './globals/Header/config'
 import { ThemeConfig } from './globals/ThemeConfig/config'
@@ -164,7 +168,7 @@ export default buildConfig({
   db: mongooseAdapter({
     url: process.env.MONGODB_URI || '',
   }),
-  collections: [Pages, Posts, Media, Categories, Users, Roles],
+  collections: [Pages, Posts, Media, Categories, InstagramPosts, Users, Roles, Organisations, Offres, CitationsPresse],
   cors: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   csrf: [process.env.PAYLOAD_PUBLIC_SERVER_URL || ''].filter(Boolean),
   globals: [ThemeConfig, Header, Footer, PageConfig],

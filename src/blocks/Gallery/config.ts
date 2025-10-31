@@ -97,15 +97,35 @@ export const Gallery: Block = {
       },
     }),
     {
+      name: 'useInstagramPosts',
+      type: 'checkbox',
+      defaultValue: false,
+      admin: {
+        description: 'Use Instagram posts instead of manual gallery items',
+        condition: (_, { designVersion = '' } = {}) =>
+          designVersion === 'GALLERY4',
+      },
+    },
+    {
+      name: 'instagramPostsLimit',
+      type: 'number',
+      defaultValue: 12,
+      admin: {
+        description: 'Number of Instagram posts to display',
+        condition: (_, { designVersion = '', useInstagramPosts = false } = {}) =>
+          designVersion === 'GALLERY4' && useInstagramPosts === true,
+      },
+    },
+    {
       name: 'elements',
       label: 'Gallery Items',
       type: 'array',
       required: true,
       minRows: 1,
       admin: {
-        description: 'Add images to the gallery',
-        condition: (_, { designVersion = '' } = {}) =>
-          galleryDesignVersions.includes(designVersion),
+        description: 'Add images to the gallery (ignored if using Instagram posts)',
+        condition: (_, { designVersion = '', useInstagramPosts = false } = {}) =>
+          galleryDesignVersions.includes(designVersion) && !useInstagramPosts,
       },
       fields: [
         {

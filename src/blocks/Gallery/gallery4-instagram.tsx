@@ -7,17 +7,26 @@ import { Button } from '@/components/ui/button'
 import type { CarouselApi } from '@/components/ui/carousel'
 import { Carousel, CarouselContent, CarouselItem } from '@/components/ui/carousel'
 import { GalleryBlock } from '@/payload-types'
-import { Media } from '@/components/Media'
-import RichText from '@/components/RichText'
-import { CMSLink } from '@/components/Link'
-
 import { PublicContextProps } from '@/utilities/publicContextProps'
+import { serverUrl as NEXT_PUBLIC_SERVER_URL } from '@/config/server'
 
-const Gallery4: React.FC<GalleryBlock & { publicContext: PublicContextProps }> = ({
-  richText,
-  elements,
-  publicContext,
-}) => {
+interface InstagramPost {
+  id: string
+  instagramId: string
+  caption?: string
+  mediaType: string
+  mediaUrl: string
+  thumbnailUrl?: string
+  permalink: string
+  timestamp: string
+}
+
+const Gallery4Instagram: React.FC<
+  GalleryBlock & {
+    publicContext: PublicContextProps
+    instagramPosts: InstagramPost[]
+  }
+> = ({ richText, publicContext, instagramPosts }) => {
   const [carouselApi, setCarouselApi] = useState<CarouselApi>()
   const [canScrollPrev, setCanScrollPrev] = useState(false)
   const [canScrollNext, setCanScrollNext] = useState(false)
@@ -38,20 +47,25 @@ const Gallery4: React.FC<GalleryBlock & { publicContext: PublicContextProps }> =
       carouselApi.off('select', updateSelection)
     }
   }, [carouselApi])
+
+  if (!instagramPosts || instagramPosts.length === 0) {
+    // Si pas de posts Instagram, ne rien afficher plutôt que de causer une erreur d'hydratation
+    return null
+  }
+
   return (
     <section className="py-32">
       <div className="container">
         <div className="mb-8 flex items-end justify-between md:mb-14 lg:mb-16">
           {richText && (
-            <RichText
-              publicContext={publicContext}
-              content={richText}
-              withWrapper={true}
-              overrideStyle={{
-                h2: 'text-3xl font-medium md:text-4xl lg:text-5xl lg:mb-6 md:mb-4',
-                p: 'text-muted-foreground',
-              }}
-            />
+            <div className="flex flex-col gap-4">
+              <h2 className="text-3xl font-medium md:text-4xl lg:text-5xl lg:mb-6 md:mb-4">
+                Derniers posts Instagram
+              </h2>
+              <p className="text-muted-foreground max-w-lg">
+                Découvrez nos dernières publications sur Instagram
+              </p>
+            </div>
           )}
           <div className="hidden shrink-0 gap-2 md:flex">
             <Button
@@ -91,55 +105,43 @@ const Gallery4: React.FC<GalleryBlock & { publicContext: PublicContextProps }> =
           }}
         >
           <CarouselContent className="ml-0 2xl:ml-[max(8rem,calc(50vw-700px))] 2xl:mr-[max(0rem,calc(50vw-700px))]">
-            {elements &&
-              elements.map((item) => (
-                <CarouselItem key={item.id} className="max-w-[320px] pl-[20px] lg:max-w-[360px]">
-                  <a
-                    href={item.link?.url || '#'}
-                    className="group rounded-xl"
-                    target={item?.link?.newTab ? '_blank' : '_self'}
-                  >
-                    <div className="group relative h-full min-h-[27rem] max-w-full overflow-hidden rounded-xl md:aspect-5/4 lg:aspect-16/9">
-                      {item.image && (
-                        <Media
-                          resource={item.image}
-                          className="absolute size-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
-                          imgClassName="absolute size-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
-                          fill
-                        />
+            {instagramPosts.map((post) => (
+              <CarouselItem key={post.id} className="max-w-[320px] pl-[20px] lg:max-w-[360px]">
+                <a
+                  href={post.permalink}
+                  className="group rounded-xl"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <div className="group relative h-full min-h-[27rem] max-w-full overflow-hidden rounded-xl md:aspect-5/4 lg:aspect-16/9">
+                    <img
+                      src={post.mediaUrl}
+                      alt={post.caption || 'Post Instagram'}
+                      className="absolute size-full object-cover object-center transition-transform duration-300 group-hover:scale-105"
+                      loading="lazy"
+                      decoding="async"
+                    />
+                    <div className="absolute inset-0 h-full bg-[linear-gradient(transparent_20%,var(--primary)_100%)] mix-blend-multiply" />
+                    <div className="text-primary-foreground absolute inset-x-0 bottom-0 flex flex-col items-start p-6 md:p-8">
+                      {post.caption && (
+                        <div className="mb-2 pt-4 text-xl font-semibold md:mb-3 md:pt-4 lg:pt-4">
+                          <p className="line-clamp-2">{post.caption}</p>
+                        </div>
                       )}
-                      <div className="absolute inset-0 h-full bg-[linear-gradient(transparent_20%,var(--primary)_100%)] mix-blend-multiply" />
-                      <div className="text-primary-foreground absolute inset-x-0 bottom-0 flex flex-col items-start p-6 md:p-8">
-                        {item.richText && (
-                          <RichText
-                            publicContext={publicContext}
-                            content={item.richText}
-                            overrideStyle={{
-                              h3: 'mb-2 pt-4 text-xl font-semibold md:mb-3 md:pt-4 lg:pt-4',
-                              h4: 'mb-2 pt-4 text-xl font-semibold md:mb-3 md:pt-4 lg:pt-4',
-                              p: 'mb-8 line-clamp-2 md:mb-12 lg:mb-9',
-                            }}
-                          />
-                        )}
-                        {item.link && (
-                          <CMSLink
-                            publicContext={publicContext}
-                            appearance="inline"
-                            withAnchor={false}
-                            {...item.link}
-                            iconClassName="ml-2 size-5 transition-transform group-hover:translate-x-1"
-                          />
-                        )}
+                      <div className="flex items-center text-sm mt-4">
+                        Voir sur Instagram{' '}
+                        <ArrowRight className="ml-2 size-5 transition-transform group-hover:translate-x-1" />
                       </div>
                     </div>
-                  </a>
-                </CarouselItem>
-              ))}
+                  </div>
+                </a>
+              </CarouselItem>
+            ))}
           </CarouselContent>
         </Carousel>
-        {elements && elements.length > 0 && (
+        {instagramPosts.length > 0 && (
           <div className="mt-8 flex justify-center gap-2">
-            {elements.map((_, index) => (
+            {instagramPosts.map((_, index) => (
               <button
                 key={index}
                 className={`h-2 w-2 rounded-full transition-colors ${
@@ -156,4 +158,5 @@ const Gallery4: React.FC<GalleryBlock & { publicContext: PublicContextProps }> =
   )
 }
 
-export default Gallery4
+export default Gallery4Instagram
+

@@ -2,6 +2,7 @@ import Gallery1 from '@/blocks/Gallery/gallery1'
 import Gallery2 from '@/blocks/Gallery/gallery2'
 import Gallery3 from '@/blocks/Gallery/gallery3'
 import Gallery4 from '@/blocks/Gallery/gallery4'
+import Gallery4Instagram from '@/blocks/Gallery/gallery4-instagram'
 import Gallery5 from '@/blocks/Gallery/gallery5'
 import Gallery6 from '@/blocks/Gallery/gallery6'
 import Gallery7 from '@/blocks/Gallery/gallery7'
@@ -9,6 +10,8 @@ import { Gallery25 } from '@/blocks/Gallery/gallery25'
 import { Gallery26 } from '@/blocks/Gallery/gallery26'
 import { Page } from '@/payload-types'
 import { allGalleryDesignVersions } from './config'
+import { getCachedInstagramPosts } from '@/utilities/getInstagramPosts'
+import React from 'react'
 
 // Extract just the value property from the design version objects
 type GalleryDesignVersionValue = (typeof allGalleryDesignVersions)[number]['value']
@@ -30,12 +33,21 @@ const galleries: Gallery = {
   GALLERY26: Gallery26,
 }
 
-export const GalleryBlock: React.FC<Page['layout'][0]> = (props) => {
+export const GalleryBlock: React.FC<Page['layout'][0] & { publicContext?: any; instagramPosts?: any[] }> = (props) => {
   if (props.blockType !== 'gallery') return null
 
-  const { designVersion } = props || {}
+  const { designVersion, useInstagramPosts } = props || {}
 
   if (!designVersion) return null
+
+  // Si c'est Gallery4 et que useInstagramPosts est activé, utiliser Gallery4Instagram avec les posts Instagram
+  if (designVersion === 'GALLERY4' && useInstagramPosts) {
+    // Si pas de posts Instagram ou tableau vide, ne rien afficher
+    if (!props.instagramPosts || props.instagramPosts.length === 0) {
+      return null
+    }
+    return <Gallery4Instagram {...props} instagramPosts={props.instagramPosts} />
+  }
 
   const GalleryToRender = galleries[designVersion]
 
